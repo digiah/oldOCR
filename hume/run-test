@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+BASE=$(dirname $0)
+ESCALE=0.1
+ZOOM=0.80
+SKEWSTEPS=4
+
+
+echo " BASE = $BASE" 
+echo " escale = $ESCALE" 
+echo " zoom = $ZOOM" 
+echo " skewsteps = $SKEWSTEPS" 
+
+
+rm -rf temp
+rm -rf normal
+rm -rf italics
+echo ocropus-nlbin $BASE/png/test.png -o temp -z $ZOOM
+ocropus-nlbin $BASE/png/test.png -o temp -z $ZOOM
+echo ocropus-gpageseg -n 'temp/????.bin.png'
+ocropus-gpageseg -n 'temp/????.bin.png'
+# Normal letters
+    echo
+    echo "   Running Ocropus model for normal letters" 
+    echo
+    cp -r temp temp2
+    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-noiod-00128000.pyrnn.gz
+    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-noiod-00128000.pyrnn.gz
+    echo ocropus-hocr 'temp/????.bin.png' -o temp.html
+    ocropus-hocr 'temp/????.bin.png' -o temp.html
+    echo ocropus-visualize-results temp
+    ocropus-visualize-results temp
+    echo ocropus-gtedit html temp/????/??????.bin.png -o temp-correction.html
+    ocropus-gtedit html temp/????/??????.bin.png -o temp-correction.html
+    mv temp normal
+    mv *.html normal
+    mv temp2 temp
+# Italics letters
+    echo
+    echo "   Running Ocropus model for italics letters" 
+    echo
+    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00131000.pyrnn.gz
+    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00131000.pyrnn.gz
+    echo ocropus-hocr 'temp/????.bin.png' -o temp.html
+    ocropus-hocr 'temp/????.bin.png' -o temp.html
+    echo ocropus-visualize-results temp
+    ocropus-visualize-results temp
+    echo ocropus-gtedit html temp/????/??????.bin.png -o temp-correction.html
+    ocropus-gtedit html temp/????/??????.bin.png -o temp-correction.html
+    mv temp italics
+    mv *.html italics
+echo "to see recognition results for normal letters, type: firefox normal/temp.html"
+echo "to see correction page, type: firefox normal/temp-correction.html"
+echo "to see details on the recognition process, type: firefox normal/index.html"
+echo "to see recognition results for italics letters, type: firefox italics/temp.html"
+echo "to see correction page, type: firefox italics/temp-correction.html"
+echo "to see details on the recognition process, type: firefox italics/index.html"
