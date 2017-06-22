@@ -39,8 +39,8 @@ ocropus-gpageseg -n 'temp/????.bin.png'
     echo
     echo "   Running Ocropus model for italics letters" 
     echo
-    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00131000.pyrnn.gz
-    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00131000.pyrnn.gz
+    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00121000.pyrnn.gz
+    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00121000.pyrnn.gz
     echo ocropus-hocr 'temp/????.bin.png' -o temp.html
     ocropus-hocr 'temp/????.bin.png' -o temp.html
     echo ocropus-visualize-results temp
