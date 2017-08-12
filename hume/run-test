@@ -15,8 +15,8 @@ echo " skewsteps = $SKEWSTEPS"
 rm -rf temp
 rm -rf normal
 rm -rf italics
-echo ocropus-nlbin $BASE/png/test.png -o temp -z $ZOOM
-ocropus-nlbin $BASE/png/test.png -o temp -z $ZOOM
+echo ocropus-nlbin $BASE/new_png/dialoguesconcern1779hume_0016.png -o temp -z $ZOOM
+ocropus-nlbin $BASE/new_png/dialoguesconcern1779hume_0016.png -o temp -z $ZOOM
 echo ocropus-gpageseg -n 'temp/????.bin.png'
 ocropus-gpageseg -n 'temp/????.bin.png'
 # Normal letters
