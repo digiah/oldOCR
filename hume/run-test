@@ -24,8 +24,8 @@ ocropus-gpageseg -n 'temp/????.bin.png'
     echo "   Running Ocropus model for normal letters" 
     echo
     cp -r temp temp2
-    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-noiod-00128000.pyrnn.gz
-    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-noiod-00128000.pyrnn.gz
+    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/niSod.gz
+    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/niSod.gz
     echo ocropus-hocr 'temp/????.bin.png' -o temp.html
     ocropus-hocr 'temp/????.bin.png' -o temp.html
     echo ocropus-visualize-results temp
@@ -39,8 +39,8 @@ ocropus-gpageseg -n 'temp/????.bin.png'
     echo
     echo "   Running Ocropus model for italics letters" 
     echo
-    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00121000.pyrnn.gz
-    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/hume-model-ionod-00121000.pyrnn.gz
+    echo ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/inSod.gz
+    ocropus-rpred -n 'temp/????/??????.bin.png' -m $BASE/models/inSod.gz
     echo ocropus-hocr 'temp/????.bin.png' -o temp.html
     ocropus-hocr 'temp/????.bin.png' -o temp.html
     echo ocropus-visualize-results temp
