@@ -1,0 +1,62 @@
+#!/bin/bash -e
+
+BASE=$(dirname $0)
+dir1="normal"
+dir2="italics"
+
+if test -d occtemp
+then
+    rm -rf occtemp
+fi
+cp -r $dir1 occtemp
+\rm occtemp/0001/*.txt
+\rm occtemp/0001/*.html
+if test -f $dir1/occtemp.txt
+then
+    \rm $dir1/occtemp.txt
+fi
+if test -f $dir2/occtemp.txt
+then
+    \rm $dir2/occtemp.txt
+fi
+touch $dir1/occtemp.txt
+touch $dir2/occtemp.txt
+touch occtemp/occtemp.txt
+echo "Running occollate between files in directories"
+echo "        $dir1 and $dir2"
+ntxt1=`eval ls $dir1/0001/*.txt | wc | awk '{print $1;}'`
+ntxt2=`eval ls $dir2/0001/*.txt | wc | awk '{print $1;}'`
+echo "        #Text files in dir1 = $ntxt1"
+echo "        #Text files in dir2 = $ntxt2"
+if [ ! $ntxt1 == $ntxt2 ]
+then
+    echo "Warning: Number of files in the two directories is not the same"
+fi
+txt1=`eval ls $dir1/0001/*.txt`
+txt2=`eval ls $dir2/0001/*.txt`
+echo
+echo "Starting occolate processing ..."
+echo
+for f1 in $txt1
+do
+    f=`echo $f1 | sed -e "s/$dir1\/0001//g"`
+    prefix=`echo $f | sed -e "s/.txt//g"`
+    #echo "file1 is $f1"
+    f2="$dir2/0001/$f"
+    fout="occtemp/0001/$prefix.txt"
+    #echo "file2 is $f2"
+    #echo "output file is $fout"
+    echo "./bin/occolate.py $f1 $f2"
+    ./bin/occolate.py $f1 $f2
+    cat $f1 >> $dir1/occtemp.txt
+    cat $f2 >> $dir2/occtemp.txt
+    cat occolate_out.txt >> occtemp/occtemp.txt
+    #echo mv occolate_out.txt $fout
+    mv occolate_out.txt $fout
+done
+echo ocropus-hocr 'occtemp/????.bin.png' -o occtemp.html
+ocropus-hocr 'occtemp/????.bin.png' -o occtemp.html
+echo ocropus-visualize-results occtemp
+ocropus-visualize-results occtemp
+echo ocropus-gtedit html occtemp/????/??????.bin.png -o occtemp-correction.html
+ocropus-gtedit html occtemp/????/??????.bin.png -o occtemp-correction.html
