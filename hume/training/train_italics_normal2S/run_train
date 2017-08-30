@@ -1,0 +1,12 @@
+#!/bin/bash
+export PYTHONIOENCODING="UTF-8"
+
+## Normal over default
+#stdbuf -o0 -e0 ocropus-rtrain --load en-default.pyrnn.gz -o hume-model-nod- *.png > result.log 2>&1 
+# Normal by itself
+#stdbuf -o0 -e0 ocropus-rtrain -o hume-model-noit- *.png > result.log 2>&1 
+# Normal over italics over default
+#stdbuf -o0 -e0 ocropus-rtrain --load hume-model-iSod.pyrnn.gz -o hume-model-noiSod- *.png > result.log 2>&1 
+# Normal over default
+#stdbuf -o0 -e0 ocropus-rtrain --load en-default.pyrnn.gz -o hume-model-inSod- *.png > result.log 2>&1 
+ocropus-rtrain --load en-default.pyrnn.gz -o hume-model-inSod- *.png
